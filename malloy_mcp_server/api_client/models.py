@@ -88,9 +88,16 @@ class CompiledModel(Model):
 
 
 class QueryResult(BaseModel):
-    data_styles: Any = Field(alias="dataStyles")
-    model_def: Any = Field(alias="modelDef")
-    query_result: str = Field(alias="queryResult")
+    """A Malloy query's results, its model def, and its data styles.
+    
+    Attributes:
+        data_styles: Data style for rendering query results (opaque JSON string)
+        model_def: Malloy model definition (opaque JSON string)
+        query_result: Malloy query results (opaque JSON string)
+    """
+    data_styles: str = Field(alias="dataStyles", description="Data style for rendering query results")
+    model_def: str = Field(alias="modelDef", description="Malloy model definition")
+    query_result: str = Field(alias="queryResult", description="Malloy query results")
 
     model_config = ConfigDict(
         populate_by_name=True,
