@@ -10,3 +10,5 @@ wheels/
 .venv
 
 test_env/
+
+.coverage
