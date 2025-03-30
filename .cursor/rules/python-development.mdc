@@ -5,6 +5,9 @@ alwaysApply: true
 ---
 You are an expert in Python
 
+- Use venv for virtual environments
+** Before starting a project set up a virtual environment
+** Before working in a project activate the virtual environment
 - Use black for code formatting
 - Use mypy for type checking
 - Use ruff for code linting

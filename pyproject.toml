@@ -1,20 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name = "malloy-publisher"
+name = "molloy-publisher-client"
 version = "0.1.0"
 description = "A Python client for the Malloy Publisher API"
 readme = "README.md"
 requires-python = ">=3.11"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Nick Amabile", email = "nick.amabile@gmail.com"}
+]
+keywords = ["malloy", "api", "client", "publisher"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "httpx>=0.28.1",
     "pydantic>=2.0.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/namabile/malloy-publisher-client"
+Repository = "https://github.com/namabile/malloy-publisher-client"
+Documentation = "https://github.com/namabile/malloy-publisher-client#readme"
+"Bug Tracker" = "https://github.com/namabile/malloy-publisher-client/issues"
 
 [project.optional-dependencies]
 dev = [
     "black>=24.0.0",
     "mypy>=1.8.0",
     "ruff>=0.3.0",
-    "types-httpx>=0.28.0",
+    "pydantic[mypy]>=2.0.0",
 ]
 
 [tool.black]
@@ -41,3 +64,6 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "B", "I", "N", "UP", "PL", "RUF"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["molloy_publisher_client"]

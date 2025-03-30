@@ -1,4 +1,4 @@
-"""Tests for the Malloy Publisher API client.
+"""Tests for the Malloy API client.
 
 This module contains tests for the Malloy Publisher API client implementation.
 The tests verify that the client correctly interacts with the API endpoints
@@ -9,8 +9,8 @@ from collections.abc import Generator
 
 import pytest
 
-from malloy_publisher.api_client.client import MalloyAPIClient, QueryParams
-from malloy_publisher.api_client.models import ModelType
+from molloy_publisher_client import MalloyAPIClient, QueryParams
+from molloy_publisher_client.models import ModelType
 
 
 @pytest.fixture
