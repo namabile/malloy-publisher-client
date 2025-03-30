@@ -17,6 +17,16 @@ A Python client for interacting with the Malloy Publisher API. This client provi
 
 ## Installation
 
+You can install the package directly from PyPI:
+
+```bash
+pip install molloy-publisher-client
+# or using uv
+uv pip install molloy-publisher-client
+```
+
+For development installation:
+
 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/malloy-publisher-client.git
@@ -119,6 +129,36 @@ pytest
 For verbose output:
 ```bash
 pytest -v
+```
+
+### Building and Publishing
+
+To build the package:
+
+```bash
+# Clean previous builds
+rm -rf dist/ build/ *.egg-info/
+
+# Install build tools
+uv pip install build twine
+
+# Build the package
+python -m build
+```
+
+To publish to PyPI:
+
+1. Ensure you have a PyPI account and your credentials are configured in `~/.pypirc`
+2. Build the package as described above
+3. Upload to PyPI:
+```bash
+python -m twine upload dist/*
+```
+
+4. Create a git tag for the release:
+```bash
+git tag -a vX.Y.Z -m "Release vX.Y.Z"
+git push origin vX.Y.Z
 ```
 
 ## Contributing
