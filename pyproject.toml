@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "molloy_publisher_client"
+name = "malloy_publisher_client"
 version = "0.1.1"
 description = "A Python client for the Malloy Publisher API"
 readme = "README.md"
@@ -37,7 +37,7 @@ dev = [
     "black>=24.0.0",
     "mypy>=1.8.0",
     "ruff>=0.3.0",
-    "pydantic[mypy]>=2.0.0",
+    "pydantic>=2.0.0",
 ]
 
 [tool.black]
@@ -66,4 +66,4 @@ target-version = "py311"
 select = ["E", "F", "B", "I", "N", "UP", "PL", "RUF"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["molloy_publisher_client"]
+packages = ["malloy_publisher_client"]

@@ -9,8 +9,8 @@ from collections.abc import Generator
 
 import pytest
 
-from molloy_publisher_client import MalloyAPIClient, QueryParams
-from molloy_publisher_client.models import ModelType
+from malloy_publisher_client import MalloyAPIClient, QueryParams
+from malloy_publisher_client.models import ModelType
 
 
 @pytest.fixture

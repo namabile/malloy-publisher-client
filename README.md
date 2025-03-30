@@ -20,9 +20,9 @@ A Python client for interacting with the Malloy Publisher API. This client provi
 You can install the package directly from PyPI:
 
 ```bash
-pip install molloy-publisher-client
+pip install malloy-publisher-client
 # or using uv
-uv pip install molloy-publisher-client
+uv pip install malloy-publisher-client
 ```
 
 For development installation:
@@ -51,7 +51,7 @@ uv pip install -e ".[dev]"
 Here's a basic example of how to use the client:
 
 ```python
-from molloy_publisher_client import MalloyAPIClient, QueryParams
+from malloy_publisher_client import MalloyAPIClient, QueryParams
 
 # Initialize the client
 client = MalloyAPIClient(

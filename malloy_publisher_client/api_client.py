@@ -10,7 +10,7 @@ from typing import Any, cast
 import httpx
 from pydantic import ValidationError
 
-from molloy_publisher_client.models import (
+from malloy_publisher_client.models import (
     About,
     Database,
     Error,
