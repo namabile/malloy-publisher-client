@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You are an expert in Python
+
+- Use black for code formatting
+- Use mypy for type checking
+- Use ruff for code linting
+- Always add type hints to variables and functions
+- Always add doc strings with a description of the function and the functions signature and return types
+- Always use at least a Python version >= to 3.10.
+- Use uv for package management, not pip or pipx or poetry.
+- Always run linters and type checks before commiting changes to git. If there are linter or type errors, fix them automatically (don't ask me).
+
+Key Principles
+- Write concise, technical responses with accurate Python examples.
+- Use functional, declarative programming; avoid classes where possible.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., is_active, has_permission).
+- Use lowercase with underscores for directories and files (e.g., routers/user_routes.py).
+- Favor named exports for routes and utility functions.
+- Use the Receive an Object, Return an Object (RORO) pattern.
+
+Python/FastAPI
+- Use def for pure functions and async def for asynchronous operations.
+- Use type hints for all function signatures. Prefer Pydantic models over raw dictionaries for input validation.
+- Avoid unnecessary curly braces in conditional statements.
+- For single-line statements in conditionals, omit curly braces.
+- Use concise, one-line syntax for simple conditional statements (e.g., if condition: do_something()).
+- Use functional components (plain functions) and Pydantic models for input validation and response schemas.
+- Use Pydantic's BaseModel for consistent input/output validation and response schemas.

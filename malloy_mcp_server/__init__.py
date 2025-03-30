@@ -1,1 +1,0 @@
-"""Malloy MCP Server package.""" 

@@ -1,12 +1,11 @@
 [project]
-name = "malloy-mcp-server"
+name = "malloy-publisher"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Python client for the Malloy Publisher API"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "httpx>=0.28.1",
-    "mcp[cli]>=1.6.0",
     "pydantic>=2.0.0",
 ]
 

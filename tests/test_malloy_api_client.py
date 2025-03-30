@@ -1,20 +1,38 @@
-"""Tests for the Malloy API client."""
+"""Tests for the Malloy Publisher API client.
+
+This module contains tests for the Malloy Publisher API client implementation.
+The tests verify that the client correctly interacts with the API endpoints
+and properly handles responses and errors.
+"""
+
+from collections.abc import Generator
 
 import pytest
-from typing import Generator
-from malloy_mcp_server.api_client.client import MalloyAPIClient, QueryParams
-from malloy_mcp_server.api_client.models import ModelType
+
+from malloy_publisher.api_client.client import MalloyAPIClient, QueryParams
+from malloy_publisher.api_client.models import ModelType
 
 
 @pytest.fixture
 def client() -> Generator[MalloyAPIClient, None, None]:
-    """Create a Malloy API client instance."""
+    """Create a Malloy Publisher API client instance.
+
+    Yields:
+        MalloyAPIClient: A configured API client instance
+    """
     with MalloyAPIClient("http://localhost:4000") as client:
         yield client
 
 
 def test_list_projects(client: MalloyAPIClient) -> None:
-    """Test listing projects."""
+    """Test listing projects.
+
+    Verifies that:
+    1. The response is a list
+    2. At least one project exists
+    3. Each project has a name attribute
+    4. The home project exists
+    """
     projects = client.list_projects()
     assert isinstance(projects, list)
     # At least one project should exist
@@ -28,14 +46,25 @@ def test_list_projects(client: MalloyAPIClient) -> None:
 
 
 def test_get_about(client: MalloyAPIClient) -> None:
-    """Test getting about information."""
+    """Test getting about information.
+
+    Verifies that:
+    1. The response has a readme attribute
+    2. The readme is a string
+    """
     about = client.get_about("home")
     assert hasattr(about, "readme")
     assert isinstance(about.readme, str)
 
 
 def test_list_packages(client: MalloyAPIClient) -> None:
-    """Test listing packages."""
+    """Test listing packages.
+
+    Verifies that:
+    1. The response is a list
+    2. Each package has name and description attributes
+    3. The attributes are strings
+    """
     packages = client.list_packages("home")
     assert isinstance(packages, list)
     # Each package should have a name and description
@@ -47,7 +76,13 @@ def test_list_packages(client: MalloyAPIClient) -> None:
 
 
 def test_get_package(client: MalloyAPIClient) -> None:
-    """Test getting package details."""
+    """Test getting package details.
+
+    Verifies that:
+    1. A package can be retrieved by name
+    2. The package has name and description attributes
+    3. The attributes are strings
+    """
     packages = client.list_packages("home")
     assert len(packages) > 0
     package_name = packages[0].name
@@ -60,7 +95,13 @@ def test_get_package(client: MalloyAPIClient) -> None:
 
 
 def test_list_models(client: MalloyAPIClient) -> None:
-    """Test listing models."""
+    """Test listing models.
+
+    Verifies that:
+    1. The response is a list
+    2. Each model has required attributes
+    3. The attributes have correct types
+    """
     packages = client.list_packages("home")
     assert len(packages) > 0
     package_name = packages[0].name
@@ -77,7 +118,13 @@ def test_list_models(client: MalloyAPIClient) -> None:
 
 
 def test_get_model(client: MalloyAPIClient) -> None:
-    """Test getting model details."""
+    """Test getting model details.
+
+    Verifies that:
+    1. A model can be retrieved by name
+    2. The model has required attributes
+    3. The attributes have correct types
+    """
     packages = client.list_packages("home")
     assert len(packages) > 0
     package_name = packages[0].name
@@ -96,14 +143,21 @@ def test_get_model(client: MalloyAPIClient) -> None:
 
 
 def test_execute_query(client: MalloyAPIClient) -> None:
-    """Test executing a query."""
+    """Test executing a query.
+
+    Verifies that:
+    1. A named query can be executed
+    2. The response has required attributes
+    3. The attributes have correct types
+    4. Error cases are handled correctly
+    """
     # Test with a named query
     query_params = QueryParams(
         project_name="home",
         package_name="faa",
         path="flights.malloy",
         source_name="flights",
-        query_name="top_carriers"
+        query_name="top_carriers",
     )
 
     result = client.execute_query(query_params)
@@ -115,26 +169,38 @@ def test_execute_query(client: MalloyAPIClient) -> None:
     assert isinstance(result.query_result, str)
 
     # Test error cases
-    with pytest.raises(ValueError, match="Cannot specify both query and query_name parameters"):
-        client.execute_query(QueryParams(
-            project_name="home",
-            package_name="faa",
-            path="flights.malloy",
-            query="test query",
-            query_name="test_query"
-        ))
+    error_msg = "Cannot specify both query and query_name parameters"
+    with pytest.raises(ValueError, match=error_msg):
+        client.execute_query(
+            QueryParams(
+                project_name="home",
+                package_name="faa",
+                path="flights.malloy",
+                query="test query",
+                query_name="test_query",
+            )
+        )
 
-    with pytest.raises(ValueError, match="source_name is required when query_name is specified"):
-        client.execute_query(QueryParams(
-            project_name="home",
-            package_name="faa",
-            path="flights.malloy",
-            query_name="test_query"
-        ))
+    error_msg = "source_name is required when query_name is specified"
+    with pytest.raises(ValueError, match=error_msg):
+        client.execute_query(
+            QueryParams(
+                project_name="home",
+                package_name="faa",
+                path="flights.malloy",
+                query_name="test_query",
+            )
+        )
 
 
 def test_list_databases(client: MalloyAPIClient) -> None:
-    """Test listing databases."""
+    """Test listing databases.
+
+    Verifies that:
+    1. The response is a list
+    2. Each database has required attributes
+    3. The attributes have correct types
+    """
     packages = client.list_packages("home")
     assert len(packages) > 0
     package_name = packages[0].name
@@ -150,7 +216,13 @@ def test_list_databases(client: MalloyAPIClient) -> None:
 
 
 def test_list_schedules(client: MalloyAPIClient) -> None:
-    """Test listing schedules."""
+    """Test listing schedules.
+
+    Verifies that:
+    1. The response is a list
+    2. Each schedule has required attributes
+    3. The attributes have correct types
+    """
     packages = client.list_packages("home")
     assert len(packages) > 0
     package_name = packages[0].name
@@ -170,4 +242,4 @@ def test_list_schedules(client: MalloyAPIClient) -> None:
         assert isinstance(schedule.action, str)
         assert isinstance(schedule.connection, str)
         assert isinstance(schedule.last_run_time, float)
-        assert isinstance(schedule.last_run_status, str) 
+        assert isinstance(schedule.last_run_status, str)
