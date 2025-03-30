@@ -4,7 +4,7 @@ This package provides a type-safe interface for working with Malloy projects,
 packages, models, and executing queries.
 """
 
-from molloy_publisher_client.client import APIError, MalloyAPIClient, QueryParams
+from molloy_publisher_client.api_client import APIError, MalloyAPIClient, QueryParams
 from molloy_publisher_client.models import (
     About,
     Database,

@@ -41,7 +41,7 @@ uv pip install -e ".[dev]"
 Here's a basic example of how to use the client:
 
 ```python
-from malloy_publisher.api_client.client import MalloyAPIClient, QueryParams
+from molloy_publisher_client import MalloyAPIClient, QueryParams
 
 # Initialize the client
 client = MalloyAPIClient(
