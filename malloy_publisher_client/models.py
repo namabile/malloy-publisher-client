@@ -5,7 +5,7 @@ These models handle data validation and serialization for API requests and respo
 """
 
 from enum import Enum
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -63,10 +63,10 @@ class Error(BaseModel):
 
 
 class About(BaseModel):
-    """Service metadata.
+    """API metadata.
 
     Attributes:
-        readme: README content
+        readme: Readme markdown content
     """
 
     readme: str
@@ -91,7 +91,7 @@ class Package(BaseModel):
     """
 
     name: str
-    description: str
+    description: str | None = None
 
 
 class View(BaseModel):
@@ -138,14 +138,21 @@ class NotebookCell(BaseModel):
     Attributes:
         type: Type of cell (markdown or code)
         text: Cell content
-        query_name: Optional name of the query in the cell
-        query_result: Optional query result
+        query_name: Optional name of the query if this is a named query
+        query_result: Query results if this is a code cell
     """
 
-    type: CellType
+    type: Literal["markdown", "code"]
     text: str
     query_name: str | None = Field(None, alias="queryName")
-    query_result: str | None = Field(None, alias="queryResult")
+    query_result: dict[str, Any] | None = Field(None, alias="queryResult")
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        alias_generator=lambda x: "".join(
+            word.capitalize() if i > 0 else word for i, word in enumerate(x.split("_"))
+        ),
+    )
 
 
 class Model(BaseModel):
@@ -179,7 +186,7 @@ class CompiledModel(Model):
     model_def: dict[str, Any] = Field(alias="modelDef")
     sources: list[Source]
     queries: list[Query]
-    notebook_cells: list[NotebookCell] = Field(alias="notebookCells")
+    notebook_cells: list[NotebookCell] = Field(alias="notebookCells", default_factory=list)
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -198,11 +205,11 @@ class QueryResult(BaseModel):
         query_result: Query execution results
     """
 
-    data_styles: str = Field(
+    data_styles: dict[str, Any] = Field(
         alias="dataStyles", description="Data style for rendering query results"
     )
-    model_def: str = Field(alias="modelDef", description="Malloy model definition")
-    query_result: str = Field(alias="queryResult", description="Malloy query results")
+    model_def: dict[str, Any] = Field(alias="modelDef", description="Malloy model definition")
+    query_result: dict[str, Any] = Field(alias="queryResult", description="Malloy query results")
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -216,8 +223,8 @@ class Database(BaseModel):
     """Database information.
 
     Attributes:
-        path: Path to the database file
-        size: Size of the database in bytes
+        path: Database's relative path in its package directory
+        size: Size of the embedded database in bytes
     """
 
     path: str
